@@ -7,18 +7,18 @@ import {UserService} from "../service/user.service"
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  value: string;
+  private value: string = 'aze';
 
   constructor(private userService: UserService) {
   }
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.userService.start().subscribe(
       (response: any) => {
-        this.value = response.data;
-      }, (error => {
-        console.log('une erreur est survenue')
-      })
-    );
+        this.value = response.data
+      }, error => {
+        console.log(error)
+      }
+    )
   }
 }
