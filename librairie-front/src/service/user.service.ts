@@ -3,6 +3,11 @@ import {HttpClient} from "@angular/common/http"
 
 @Injectable()
 export class UserService {
+  id;
+  username;
+  password;
+  email;
+  isConnected: boolean = false;
 
   constructor(private httpClient: HttpClient) {
   }

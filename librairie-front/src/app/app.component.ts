@@ -1,24 +1,20 @@
 import {Component, OnInit} from '@angular/core';
-import {UserService} from "../service/user.service"
+import {AuthService}       from "../service/auth.service"
+import {Router}            from "@angular/router"
+import {UserService}       from "../service/user.service"
 
 @Component({
-  selector: 'app-root',
+  selector   : 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls  : ['./app.component.scss']
 })
-export class AppComponent implements OnInit {
-  private value: string = 'aze';
+export class AppComponent implements OnInit{
 
-  constructor(private userService: UserService) {
+  constructor(private userService: UserService, private router: Router) {
   }
 
-  ngOnInit() {
-    this.userService.start().subscribe(
-      (response: any) => {
-        this.value = response.data
-      }, error => {
-        console.log(error)
-      }
-    )
+  ngOnInit(): void {
+    if (this.userService.isConnected)
+      this.router.navigate(['librairie'])
   }
 }
