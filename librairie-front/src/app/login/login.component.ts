@@ -1,31 +1,39 @@
-import {Component, OnInit}                  from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from "@angular/forms"
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {FormBuilder, FormGroup, Validators}      from "@angular/forms"
+import {User}                               from "../../models/User.model"
+import {UserService}                        from "../../service/user.service"
+import {Router}                             from "@angular/router"
 
 @Component({
-  selector   : 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls  : ['./login.component.scss']
+  selector: 'app-login', templateUrl: './login.component.html', styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private formBuilder: FormBuilder, private userService: UserService, private router: Router) {
   }
 
   ngOnInit() {
     this.initForm();
   }
 
-  private initForm() {
-    this.loginForm = this.formBuilder.group({
-      username: ['', Validators.required],
-      password: ['', Validators.required],
+  Submit() {
+    let formValue = this.loginForm.value
+    let user = new User(formValue['username'], null, formValue['password']);
+    console.log("connexion en cours")
+    this.userService.login(user).subscribe((response) => {
+      // @ts-ignore
+      localStorage.setItem("user", JSON.stringify(response.data))
+      this.userService.getUser()
+      this.router.navigate(['librairie'])
+    }, error => {
+      console.log(error)
     })
   }
 
-  Submit() {
-    let formValue = this.loginForm.value
-    console.log(formValue['username'])
-    console.log(formValue['password'])
+  private initForm() {
+    this.loginForm = this.formBuilder.group({
+      username: ['', Validators.required], password: ['', Validators.required],
+    })
   }
 }

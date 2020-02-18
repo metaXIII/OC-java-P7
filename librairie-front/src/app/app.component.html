@@ -1,6 +1,8 @@
 <header>
-  <div class="navbar navbar-dark bg-dark">
+  <div class="navbar navbar-dark bg-dark flex align-content-between">
     <a class="navbar-brand" routerLink="index">API WEB Librairie</a>
+    <a class="text-white m-0" routerLink="index" (click)="logout()" *ngIf="user">
+      Se déconnecter de mon compte : {{ user.username }}</a>
   </div>
 </header>
 

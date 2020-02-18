@@ -1,18 +1,30 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http"
+import {User}       from "../models/User.model"
 
 @Injectable()
 export class UserService {
-  id;
-  username;
-  password;
-  email;
-  isConnected: boolean = false;
 
   constructor(private httpClient: HttpClient) {
   }
 
-  start = () => {
-    return this.httpClient.get('/service/user/test')
+  isConnected = () => {
+    return !!localStorage.getItem("user");
+  }
+
+  register = (user: User) => {
+    return this.httpClient.post('/service/user/signIn', user)
+  }
+
+  login = (user: User) => {
+    return this.httpClient.post('/service/user/login', user);
+  }
+
+  getUser() {
+    return JSON.parse(localStorage.getItem("user"));
+  }
+
+  logout() {
+    localStorage.clear();
   }
 }

@@ -1,7 +1,7 @@
 export class User {
-  private username: string
-  private email: string
-  private password: string
+  public username: string
+  public email: string
+  public password: string
 
   constructor(username: string,
               email: string,
@@ -10,5 +10,4 @@ export class User {
     this.email = email
     this.password = password
   }
-
 }
