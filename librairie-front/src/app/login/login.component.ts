@@ -1,5 +1,5 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {FormBuilder, FormGroup, Validators}      from "@angular/forms"
+import {Component, OnInit}                  from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from "@angular/forms"
 import {User}                               from "../../models/User.model"
 import {UserService}                        from "../../service/user.service"
 import {Router}                             from "@angular/router"
@@ -23,8 +23,7 @@ export class LoginComponent implements OnInit {
     console.log("connexion en cours")
     this.userService.login(user).subscribe((response) => {
       // @ts-ignore
-      localStorage.setItem("user", JSON.stringify(response.data))
-      this.userService.getUser()
+      this.userService.setUser(response.data)
       this.router.navigate(['librairie'])
     }, error => {
       console.log(error)
