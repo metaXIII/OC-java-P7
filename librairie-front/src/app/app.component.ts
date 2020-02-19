@@ -18,6 +18,6 @@ export class AppComponent implements OnInit {
   }
 
   logout() {
-    this.userService.logout();
+    // this.userService.logout();
   }
 }

@@ -36,6 +36,7 @@ export class SigninComponent implements OnInit {
         console.log("L'inscription s'est bien déroulée")
         this.router.navigate(['librairie'])
       }, error => {
+        console.log(error)
         console.log("une erreur est survenue")
       })
     } else this.msg = true

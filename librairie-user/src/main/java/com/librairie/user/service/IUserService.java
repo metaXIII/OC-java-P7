@@ -6,9 +6,12 @@ import com.librairie.user.exceptions.EmailExistsException;
 import com.librairie.user.exceptions.UsernameExistsException;
 import com.librairie.user.model.User;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface IUserService {
+    List<User> findAll();
+
     Optional<User> findbyUsername(String username);
 
     Optional<User> findByEmail(String email);

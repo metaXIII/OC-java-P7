@@ -9,7 +9,8 @@ import {AuthService}                      from "../service/auth.service"
 import {SigninComponent}                  from './signin/signin.component';
 import {ConnectionComponent}              from './connection/connection.component';
 import {LibrairieComponent}                            from './librairie/librairie.component';
-import {FormBuilder, FormsModule, ReactiveFormsModule} from "@angular/forms"
+import {FormBuilder, FormsModule, ReactiveFormsModule} from "@angular/forms";
+import { TestComponent } from './test/test.component'
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import {FormBuilder, FormsModule, ReactiveFormsModule} from "@angular/forms"
     LoginComponent,
     SigninComponent,
     ConnectionComponent,
-    LibrairieComponent
+    LibrairieComponent,
+    TestComponent
   ], imports: [HttpClientModule, BrowserModule, AppRoutingModule, ReactiveFormsModule, FormsModule],
   providers   : [
     AuthService,

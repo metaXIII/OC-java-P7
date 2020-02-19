@@ -8,14 +8,24 @@ import com.librairie.user.model.User;
 import com.librairie.user.repositories.UserRepository;
 import com.librairie.user.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+import java.util.List;
 import java.util.Optional;
 
 @Service
-public class UserServiceImpl implements IUserService {
+@Transactional
+public class UserServiceImpl implements IUserService, UserDetailsService {
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public Optional<User> findbyUsername(String username) {
@@ -37,7 +47,7 @@ public class UserServiceImpl implements IUserService {
             User user = new User();
             user.setUsername(signInDto.getUsername());
             user.setEmail(signInDto.getEmail());
-            user.setPassword(signInDto.getPassword());
+            user.setPassword(passwordEncoder.encode(signInDto.getPassword()));
             return userRepository.save(user);
         }
     }
@@ -53,5 +63,16 @@ public class UserServiceImpl implements IUserService {
 
     public boolean usernameExist(String username) {
         return userRepository.findByEmail(username).isPresent();
+    }
+
+    @Override
+    public List<User> findAll() {
+        return userRepository.findAll();
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return userRepository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("Il n'existe pas d'utilisateurs avec le nom d'utilisateur " + username));
     }
 }

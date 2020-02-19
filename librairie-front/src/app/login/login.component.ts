@@ -19,12 +19,11 @@ export class LoginComponent implements OnInit {
 
   Submit() {
     let formValue = this.loginForm.value
-    let user = new User(formValue['username'], null, formValue['password']);
+    let user = {username : formValue['username'], password: formValue['password']};
     console.log("connexion en cours")
     this.userService.login(user).subscribe((response) => {
       // @ts-ignore
-      this.userService.setUser(response.data)
-      this.router.navigate(['librairie'])
+      console.log(response.data)
     }, error => {
       console.log(error)
     })
