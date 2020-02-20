@@ -15,6 +15,7 @@ import java.util.Collections;
 import java.util.Map;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/api/user/")
 public class UserController {
     @Autowired
@@ -45,6 +46,6 @@ public class UserController {
 
     @GetMapping("info")
     public ResponseEntity info() {
-        return new ResponseEntity(Collections.singletonMap("data", SecurityContextHolder.getContext().getAuthentication().getPrincipal()), HttpStatus.CREATED);
+        return new ResponseEntity(SecurityContextHolder.getContext().getAuthentication().getPrincipal(), HttpStatus.ACCEPTED);
     }
 }

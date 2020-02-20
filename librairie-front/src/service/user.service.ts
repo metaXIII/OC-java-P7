@@ -6,7 +6,6 @@ import {Subject}                 from "rxjs"
 @Injectable()
 export class UserService {
   user = new Subject<User>()
-  private options = {headers: new HttpHeaders().set('Content-Type', 'application/json')};
 
   constructor(private httpClient: HttpClient) {
   }
@@ -34,7 +33,8 @@ export class UserService {
   }
 
   login = (user: any) => {
-    return this.httpClient.post('/service/user/login', user, this.options);
+    const options = new HttpHeaders(user ? {authorization: 'Basic ' + btoa(user.username + ':' + user.password)} : {});
+    return this.httpClient.get('/service/user/info', {headers: options});
   }
 
   info = () => {
