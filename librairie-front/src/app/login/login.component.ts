@@ -1,6 +1,6 @@
 import {Component, OnInit}                  from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms"
-import {User}                               from "../../models/User.model"
+import {User}                               from "../../models/user.model"
 import {UserService}                        from "../../service/user.service"
 import {Router}                             from "@angular/router"
 
@@ -18,12 +18,11 @@ export class LoginComponent implements OnInit {
   }
 
   Submit() {
-    let formValue = this.loginForm.value
-    let user = {username : formValue['username'], password: formValue['password']};
     console.log("connexion en cours")
-    this.userService.login(user).subscribe((response) => {
-      // @ts-ignore
-      console.log(response.data)
+    let formValue = this.loginForm.value
+    let user = {username : formValue['username'], password:  formValue['password']}
+    this.userService.login(user).subscribe((response : User) => {
+      this.userService.setUser(response)
     }, error => {
       console.log(error)
     })

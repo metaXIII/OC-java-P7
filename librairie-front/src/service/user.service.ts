@@ -1,27 +1,24 @@
 import {Injectable}              from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http"
-import {User}                    from "../models/User.model"
-import {Subject}                 from "rxjs"
+import {User}                    from "../models/user.model"
 
 @Injectable()
 export class UserService {
-  user = new Subject<User>()
+  user: User
 
   constructor(private httpClient: HttpClient) {
   }
 
   getUser() {
-    return JSON.parse(localStorage.getItem("user"));
+    return this.user
   }
 
   setUser(value: User) {
-    //   // this.user.next(value)
-    //   // localStorage.setItem("user", JSON.stringify(value))
+    this.user = value
   }
 
   logout() {
-    //   localStorage.clear();
-    //   this.user.next(null)
+      this.user = null
   }
 
   isConnected = () => {
@@ -32,13 +29,9 @@ export class UserService {
     return this.httpClient.post('/service/user/signIn', user)
   }
 
-  login = (user: any) => {
-    const options = new HttpHeaders(user ? {authorization: 'Basic ' + btoa(user.username + ':' + user.password)} : {});
+  login = (form: any) => {
+    const options = new HttpHeaders(form ? {authorization: 'Basic ' + btoa(form.username + ':' + form.password)} : {});
     return this.httpClient.get('/service/user/info', {headers: options});
-  }
-
-  info = () => {
-    return JSON.stringify(this.httpClient.get('/service/user/info'));
   }
 
 }

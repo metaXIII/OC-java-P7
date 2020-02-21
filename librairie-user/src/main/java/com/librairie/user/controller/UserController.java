@@ -36,14 +36,6 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-//    @PostMapping(value = "/login")
-//    public ResponseEntity login(@RequestBody LoginDto loginDto) throws BadLogInformationException {
-//        User user = userService.login(loginDto);
-//        if (user == null)
-//            throw new BadLogInformationException("Les informations de connexion ne sont pas correctes");
-//        return new ResponseEntity(Collections.singletonMap("data", user), HttpStatus.CREATED);
-//    }
-
     @GetMapping("info")
     public ResponseEntity info() {
         return new ResponseEntity(SecurityContextHolder.getContext().getAuthentication().getPrincipal(), HttpStatus.ACCEPTED);

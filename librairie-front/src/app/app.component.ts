@@ -18,6 +18,7 @@ export class AppComponent implements OnInit {
   }
 
   logout() {
-    // this.userService.logout();
+    console.log("déconnexion en cours")
+    this.userService.logout();
   }
 }
