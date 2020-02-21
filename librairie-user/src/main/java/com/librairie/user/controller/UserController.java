@@ -11,20 +11,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collections;
-import java.util.Map;
-
 @RestController
 @CrossOrigin
 @RequestMapping("/api/user/")
 public class UserController {
     @Autowired
     private IUserService userService;
-
-    @GetMapping(value = "/test", produces = "application/json")
-    public Map<String, String> test() {
-        return Collections.singletonMap("data", "the test is ok");
-    }
 
     @PostMapping(value = "/signIn")
     public ResponseEntity signIn(@RequestBody SignInDto signInDto) throws EmailExistsException,

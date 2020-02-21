@@ -1,10 +1,14 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http"
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class LibrairieService {
 
-  constructor(private HttpClient: HttpClient) { }
+  constructor(private HttpClient: HttpClient) {
+  }
+
+
+  findAll = () => {
+    return this.HttpClient.get("/service/librairie/findAll")
+  }
 }

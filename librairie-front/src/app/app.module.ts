@@ -10,6 +10,8 @@ import {SigninComponent}                               from './signin/signin.com
 import {ConnectionComponent}                           from './connection/connection.component';
 import {LibrairieComponent}                            from './librairie/librairie.component';
 import {FormBuilder, FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {LibrairieService}                              from "../service/librairie.service"
+import {ReservationService}                            from "../service/reservation.service"
 
 @NgModule({
   declarations: [
@@ -27,6 +29,8 @@ import {FormBuilder, FormsModule, ReactiveFormsModule} from "@angular/forms";
   providers: [
     AuthService,
     UserService,
+    LibrairieService,
+    ReservationService,
     FormBuilder,
     ReactiveFormsModule
   ],
