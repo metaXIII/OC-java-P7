@@ -1,5 +1,6 @@
 import {Injectable}              from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http"
+import {userSigninModel}         from "../models/user.signin.model"
 import {User}                    from "../models/user.model"
 
 @Injectable()
@@ -18,14 +19,14 @@ export class UserService {
   }
 
   logout() {
-      this.user = null
+    this.user = null
   }
 
   isConnected = () => {
     return !!localStorage.getItem("user");
   }
 
-  register = (user: User) => {
+  register = (user: userSigninModel) => {
     return this.httpClient.post('/service/user/signIn', user)
   }
 

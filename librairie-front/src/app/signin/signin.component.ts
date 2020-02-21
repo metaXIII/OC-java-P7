@@ -1,8 +1,9 @@
 import {Component, OnInit}                  from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms"
-import {User}                               from "../../models/user.model"
 import {UserService}                        from "../../service/user.service"
 import {Router}                             from "@angular/router"
+import {userSigninModel}                    from "../../models/user.signin.model"
+import {User}                               from "../../models/user.model"
 
 @Component({
   selector: 'app-signin', templateUrl: './signin.component.html', styleUrls: ['./signin.component.scss']
@@ -20,10 +21,10 @@ export class SigninComponent implements OnInit {
 
   private initForm() {
     this.signinForm = this.formBuilder.group({
-      username     : ['', Validators.required],
-      password     : ['', Validators.required],
+      username: ['', Validators.required],
+      password: ['', Validators.required],
       checkPassword: ['', Validators.required],
-      email        : ['', Validators.email]
+      email: ['', Validators.email]
     })
   }
 
@@ -32,13 +33,14 @@ export class SigninComponent implements OnInit {
     let formValue = this.signinForm.value
     if (formValue['password'] == formValue['checkPassword']) {
       console.log('appel au microservice')
-      this.userService.register(new User(formValue['username'], formValue['email'], formValue['password'])).subscribe((response) => {
-        console.log("L'inscription s'est bien déroulée")
-        this.router.navigate(['librairie'])
-      }, error => {
-        console.log(error)
-        console.log("une erreur est survenue")
-      })
+      this.userService.register(new userSigninModel(formValue['username'], formValue['email'], formValue['password']))
+        .subscribe((response: User) => {
+          this.userService.setUser(response)
+          this.router.navigate(['librairie'])
+        }, error => {
+          console.log(error)
+          console.log("une erreur est survenue")
+        })
     } else this.msg = true
   }
 
