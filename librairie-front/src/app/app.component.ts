@@ -14,7 +14,8 @@ export class AppComponent implements OnInit {
     if (this.userService.isConnected()) {
       this.router.navigate(['librairie'])
       this.userService.user = this.userService.getUser();
-    }
+    } else
+      this.router.navigate(['index'])
   }
 
   logout() {

@@ -1,4 +1,4 @@
-<div class="alert alert-danger" *ngIf="msg">Une erreur s'est produite, merci de vérifier les informations saisies</div>
+<div class="alert alert-danger" *ngIf="error">Une erreur s'est produite, merci de vérifier les informations saisies</div>
 
 <form method="post" [formGroup]="signinForm" (ngSubmit)="Submit()">
   <div class="form-group">

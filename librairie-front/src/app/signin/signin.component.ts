@@ -10,7 +10,7 @@ import {User}                               from "../../models/user.model"
 })
 export class SigninComponent implements OnInit {
   private signinForm: FormGroup
-  private msg: boolean = false
+  private error: boolean = false
 
   constructor(private formBuilder: FormBuilder, private userService: UserService, private router: Router) {
   }
@@ -31,16 +31,19 @@ export class SigninComponent implements OnInit {
   private Submit() {
     let formValue = this.signinForm.value
     if (formValue['password'] !== formValue['checkPassword']) {
-      this.msg = true
+      this.error = true
       return;
     }
-    console.log('appel au microservice')
     this.userService.register(new userSigninModel(formValue['username'], formValue['email'], formValue['password']))
       .subscribe(() => {
-        this.router.navigate(['index'])
+        this.userService.login(formValue).subscribe((response: User) => {
+          this.userService.setUser(response)
+          this.router.navigate(['librairie'])
+        }, callback => {
+          console.log(callback)
+        })
       }, error => {
-        console.log(error)
-        console.log("une erreur est survenue")
+        this.error = true;
       })
   }
 

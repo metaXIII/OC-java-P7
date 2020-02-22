@@ -2,12 +2,13 @@ import {Injectable}              from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http"
 import {userSigninModel}         from "../models/user.signin.model"
 import {User}                    from "../models/user.model"
+import {Router}                  from "@angular/router"
 
 @Injectable()
 export class UserService {
   user: User
 
-  constructor(private httpClient: HttpClient) {
+  constructor(private httpClient: HttpClient, private router: Router) {
   }
 
   getUser() {
@@ -23,7 +24,7 @@ export class UserService {
   }
 
   isConnected = () => {
-    return !!localStorage.getItem("user");
+    return this.getUser();
   }
 
   register = (user: userSigninModel) => {

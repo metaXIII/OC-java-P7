@@ -1,1 +1,17 @@
-<h1>Liste des livres disponibles : </h1>
+<div class="alert alert-danger" *ngIf="!collection">
+  Une erreur est survenue, veuillez réessayer plus tard !
+</div>
+<h1 *ngIf="collection">Liste des livres disponibles : </h1>
+<div class="container">
+  <div class="row">
+    <div class="card col-3 offset-1 mb-2" *ngFor="let livre of collection">
+      <div class="card-body">
+        <h5 class="card-title"><a href="/detail/{{livre.id}}">{{livre.nom}}</a></h5>
+        <h6 class="card-subtitle mb-2 text-muted">{{livre.auteur}}</h6>
+        <p class=", QUANTITE">{{livre.resume}}</p>
+        <p class="card-link">{{livre.maisonEdition.nom}}</p>
+        <p class="card-link text-right">{{livre.quantite}} exemplaires</p>
+      </div>
+    </div>
+  </div>
+</div>

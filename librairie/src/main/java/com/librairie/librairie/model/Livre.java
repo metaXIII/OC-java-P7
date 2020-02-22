@@ -24,4 +24,8 @@ public class Livre {
     @ManyToOne()
     @JoinColumn(name = "MAISONEDITION")
     private MaisonEdition maisonEdition;
+
+    private String resume;
+
+    private int quantite;
 }
