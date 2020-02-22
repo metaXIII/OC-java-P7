@@ -9,6 +9,7 @@ import {Router}                             from "@angular/router"
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup
+  error : boolean = false
 
   constructor(private formBuilder: FormBuilder, private userService: UserService, private router: Router) {
   }
@@ -26,6 +27,7 @@ export class LoginComponent implements OnInit {
       this.router.navigate(['librairie'])
     }, error => {
       console.log(error)
+      this.error = true
     })
   }
 

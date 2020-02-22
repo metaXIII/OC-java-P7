@@ -24,7 +24,7 @@ public class UserController {
         User user = userService.signIn(signInDto);
         if (user == null)
             System.out.println("une erreur est survenue");
-        return new ResponseEntity<>(SecurityContextHolder.getContext().getAuthentication().getPrincipal(), HttpStatus.CREATED);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @GetMapping("info")

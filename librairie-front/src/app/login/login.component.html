@@ -1,3 +1,6 @@
+<div class="alert alert-danger" *ngIf="error">
+  Une erreur s'est produite, merci de vérifier vos identifiants
+</div>
 <form method="post" [formGroup]="loginForm" (ngSubmit)="Submit()">
   <div class="form-group">
     <label for="username">Username :</label>

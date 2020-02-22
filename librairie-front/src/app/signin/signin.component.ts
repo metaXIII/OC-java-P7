@@ -29,19 +29,19 @@ export class SigninComponent implements OnInit {
   }
 
   private Submit() {
-    console.log("Inscription en cours")
     let formValue = this.signinForm.value
-    if (formValue['password'] == formValue['checkPassword']) {
-      console.log('appel au microservice')
-      this.userService.register(new userSigninModel(formValue['username'], formValue['email'], formValue['password']))
-        .subscribe((response: User) => {
-          this.userService.setUser(response)
-          this.router.navigate(['librairie'])
-        }, error => {
-          console.log(error)
-          console.log("une erreur est survenue")
-        })
-    } else this.msg = true
+    if (formValue['password'] !== formValue['checkPassword']) {
+      this.msg = true
+      return;
+    }
+    console.log('appel au microservice')
+    this.userService.register(new userSigninModel(formValue['username'], formValue['email'], formValue['password']))
+      .subscribe(() => {
+        this.router.navigate(['index'])
+      }, error => {
+        console.log(error)
+        console.log("une erreur est survenue")
+      })
   }
 
 }
