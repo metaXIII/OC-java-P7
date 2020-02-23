@@ -21,6 +21,8 @@ public class Livre {
 
     private String ISBN;
 
+    private String categorie;
+
     @ManyToOne()
     @JoinColumn(name = "MAISONEDITION")
     private MaisonEdition maisonEdition;
