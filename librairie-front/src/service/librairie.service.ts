@@ -1,14 +1,19 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http"
+import {Search}     from "../models/search.model"
 
 @Injectable()
 export class LibrairieService {
 
-  constructor(private HttpClient: HttpClient) {
+  constructor(private httpClient: HttpClient) {
   }
 
 
   findAll = () => {
-    return this.HttpClient.get("/service/librairie/findAll")
+    return this.httpClient.get("/service/librairie/findAll")
+  }
+
+  findByFields = (search: Search) => {
+    return this.httpClient.post('/service/librairie/find', search)
   }
 }

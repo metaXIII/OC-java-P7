@@ -1,5 +1,6 @@
 package com.librairie.librairie.impl;
 
+import com.librairie.librairie.dto.CollectionDto;
 import com.librairie.librairie.model.Livre;
 import com.librairie.librairie.repositories.LibrairieRepository;
 import com.librairie.librairie.service.ILibrairieService;
@@ -18,5 +19,16 @@ public class LibrarieServiceImpl implements ILibrairieService {
     @Override
     public List<Livre> findAll() {
         return librairieRepository.findAll();
+    }
+
+    @Override
+    public List<Livre> find(CollectionDto collectionDto) {
+        if (collectionDto.getNom().isEmpty())
+            collectionDto.setNom("%");
+        if (collectionDto.getAuteur().isEmpty())
+            collectionDto.setAuteur("%");
+        if (collectionDto.getCategorie().isEmpty())
+            collectionDto.setCategorie("%");
+        return librairieRepository.findByNomAndAuteurAndCategorieIgnoreCase(collectionDto.getNom(), collectionDto.getAuteur(), collectionDto.getCategorie());
     }
 }
