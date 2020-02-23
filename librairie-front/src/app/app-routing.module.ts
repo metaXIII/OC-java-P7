@@ -5,7 +5,6 @@ import {SigninComponent}      from "./signin/signin.component"
 import {LibrairieComponent}   from "./librairie/librairie.component"
 import {ConnectionComponent}  from "./connection/connection.component"
 import {AuthService}          from "../service/auth.service"
-import {AccountComponent}     from "./account/account.component"
 import {SearchComponent}      from "./search/search.component"
 
 
