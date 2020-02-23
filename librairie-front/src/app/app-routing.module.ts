@@ -6,6 +6,8 @@ import {LibrairieComponent}   from "./librairie/librairie.component"
 import {ConnectionComponent}  from "./connection/connection.component"
 import {AuthService}          from "../service/auth.service"
 import {SearchComponent}      from "./search/search.component"
+import {ReservationComponent} from "./reservation/reservation.component"
+import {PanierComponent}      from "./panier/panier.component"
 
 
 const routes: Routes = [
@@ -14,6 +16,8 @@ const routes: Routes = [
   {path: 'signin', component: SigninComponent},
   {path: 'librairie', component: LibrairieComponent, canActivate: [AuthService]},
   {path: 'search', component: SearchComponent, canActivate: [AuthService]},
+  {path: 'reservation', component: ReservationComponent, canActivate: [AuthService]},
+  {path: 'panier', component: PanierComponent, canActivate: [AuthService]},
   {path: 'welcome', component: ConnectionComponent},
   {path: '**', redirectTo: 'index'}
 ];
