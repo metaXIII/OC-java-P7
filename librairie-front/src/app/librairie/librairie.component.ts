@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {LibrairieService}  from "../../service/librairie.service"
-import {UserService}       from "../../service/user.service"
 
 @Component({
   selector: 'app-librairie',
@@ -10,20 +9,23 @@ import {UserService}       from "../../service/user.service"
 export class LibrairieComponent implements OnInit {
   collection: any = null
 
-  constructor(private librairieService: LibrairieService, private userService: UserService) {
+  constructor(private librairieService: LibrairieService) {
   }
 
   ngOnInit() {
-    this.userService.isConnected()
     this.init()
   }
 
   private init() {
     this.librairieService.findAll().subscribe((response) => {
       this.collection = response
-      console.log(this.collection)
     }, error => {
       console.log(error)
     })
+  }
+
+  private addToPanier() {
+    alert("ajout au panier")
+    return
   }
 }

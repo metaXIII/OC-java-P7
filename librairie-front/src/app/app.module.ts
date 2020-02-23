@@ -11,7 +11,13 @@ import {ConnectionComponent}                           from './connection/connec
 import {LibrairieComponent}                            from './librairie/librairie.component';
 import {FormBuilder, FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {LibrairieService}                              from "../service/librairie.service"
-import {ReservationService}                            from "../service/reservation.service"
+import {ReservationService}                            from "../service/reservation.service";
+import {AccountComponent}                              from './account/account.component';
+import { BrowserAnimationsModule }                     from '@angular/platform-browser/animations'
+import {MatTabsModule}                                 from "@angular/material/tabs";
+import { SearchComponent } from './search/search.component';
+import { ReservationComponent } from './reservation/reservation.component';
+import { PanierComponent } from './panier/panier.component'
 
 @NgModule({
   declarations: [
@@ -20,12 +26,19 @@ import {ReservationService}                            from "../service/reservat
     SigninComponent,
     ConnectionComponent,
     LibrairieComponent,
+    AccountComponent,
+    SearchComponent,
+    ReservationComponent,
+    PanierComponent,
   ], imports: [
     HttpClientModule,
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    FormsModule],
+    FormsModule,
+    BrowserAnimationsModule,
+    MatTabsModule
+  ],
   providers: [
     AuthService,
     UserService,

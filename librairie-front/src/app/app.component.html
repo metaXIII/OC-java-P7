@@ -5,6 +5,9 @@
       Se déconnecter de mon compte : {{ userService.getUser().username}}
     </button>
   </div>
+  <div class="text-right" *ngIf="panier">
+    <button class="btn btn-success mt-2 mr-4">Mon panier</button>
+  </div>
 </header>
 
 <div class="container mt-5 pt-5">
