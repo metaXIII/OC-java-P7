@@ -23,12 +23,6 @@ public class LibrarieServiceImpl implements ILibrairieService {
 
     @Override
     public List<Livre> find(CollectionDto collectionDto) {
-        if (collectionDto.getNom().isEmpty())
-            collectionDto.setNom("%");
-        if (collectionDto.getAuteur().isEmpty())
-            collectionDto.setAuteur("%");
-        if (collectionDto.getCategorie().isEmpty())
-            collectionDto.setCategorie("%");
-        return librairieRepository.findByNomAndAuteurAndCategorieIgnoreCase(collectionDto.getNom(), collectionDto.getAuteur(), collectionDto.getCategorie());
+        return librairieRepository.findByNomContainingIgnoreCaseAndNomContainingIgnoreCaseAndCategorieContainingIgnoreCase(collectionDto.getNom(), collectionDto.getAuteur(), collectionDto.getCategorie());
     }
 }

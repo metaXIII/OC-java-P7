@@ -1,5 +1,7 @@
-import {Component, OnInit} from '@angular/core';
-import {LibrairieService}  from "../../service/librairie.service"
+import {Component, OnInit}  from '@angular/core';
+import {LibrairieService}   from "../../service/librairie.service"
+import {Livre}              from "../../models/livre.model"
+import {ReservationService} from "../../service/reservation.service"
 
 @Component({
   selector: 'app-librairie',
@@ -7,9 +9,9 @@ import {LibrairieService}  from "../../service/librairie.service"
   styleUrls: ['./librairie.component.scss']
 })
 export class LibrairieComponent implements OnInit {
-  collection: any = null
+  private collection: [Livre] = null
 
-  constructor(private librairieService: LibrairieService) {
+  constructor(private librairieService: LibrairieService, private reservationService: ReservationService) {
   }
 
   ngOnInit() {
@@ -17,15 +19,14 @@ export class LibrairieComponent implements OnInit {
   }
 
   private init() {
-    this.librairieService.findAll().subscribe((response) => {
+    this.librairieService.findAll().subscribe((response: [Livre]) => {
       this.collection = response
     }, error => {
       console.log(error)
     })
   }
 
-  private addToPanier() {
-    alert("ajout au panier")
-    return
+  private addToPanier(livre : Livre) {
+    this.reservationService.addToPanier(livre)
   }
 }

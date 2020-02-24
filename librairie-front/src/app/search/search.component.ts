@@ -2,6 +2,8 @@ import {Component, OnInit}      from '@angular/core';
 import {FormBuilder, FormGroup} from "@angular/forms"
 import {LibrairieService}       from "../../service/librairie.service"
 import {Search}                 from "../../models/search.model"
+import {ReservationService}     from "../../service/reservation.service"
+import {Livre}                  from "../../models/livre.model"
 
 @Component({
   selector: 'app-search',
@@ -9,13 +11,29 @@ import {Search}                 from "../../models/search.model"
   styleUrls: ['./search.component.scss']
 })
 export class SearchComponent implements OnInit {
-  searchForm: FormGroup
+  private searchForm: FormGroup
+  private collection: [Livre] = null
 
-  constructor(private formBuilder: FormBuilder, private librairieService: LibrairieService) {
+  constructor(private formBuilder: FormBuilder, private librairieService: LibrairieService, private reservationService: ReservationService) {
   }
 
   ngOnInit() {
     this.initForm()
+  }
+
+  Submit() {
+    let form   = this.searchForm.value
+    let search = new Search(form['nom'], form['auteur'], form['categorie'])
+    this.librairieService.findByFields(search).subscribe((response: [Livre]) => {
+      this.collection = response
+      console.log(response)
+    }, error => {
+      console.log(error)
+    })
+  }
+
+  addToPanier(livre: Livre) {
+    this.reservationService.addToPanier(livre)
   }
 
   private initForm() {
@@ -23,17 +41,6 @@ export class SearchComponent implements OnInit {
       nom: [''],
       auteur: [''],
       categorie: [''],
-    })
-  }
-
-  Submit() {
-    console.log("submit du formulaire")
-    let form   = this.searchForm.value
-    let search = new Search(form['nom'], form['auteur'], form['categorie'])
-    this.librairieService.findByFields(search).subscribe((response) => {
-      console.log(response)
-    }, error => {
-      console.log(error)
     })
   }
 }

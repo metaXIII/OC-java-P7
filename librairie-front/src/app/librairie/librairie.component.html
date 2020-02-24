@@ -14,9 +14,10 @@
         <p class="card-text">{{livre.maisonEdition.nom}}</p>
         <p class="card-text">{{livre.quantite}} exemplaires restants</p>
         <div class="mb-0 text-right">
-          <button class="btn btn-primary" *ngIf="livre.quantite > 0" (click)="addToPanier()">Ajouter au panier</button>
+          <button class="btn btn-primary" *ngIf="livre.quantite > 0" (click)="addToPanier(livre)">Ajouter au panier</button>
         </div>
       </div>
     </div>
   </div>
 </div>
+
