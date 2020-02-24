@@ -1,6 +1,5 @@
 package com.librairie.user.impl;
 
-import com.librairie.user.dto.LoginDto;
 import com.librairie.user.dto.SignInDto;
 import com.librairie.user.exceptions.EmailExistsException;
 import com.librairie.user.exceptions.UsernameExistsException;
@@ -15,7 +14,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -33,11 +31,6 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
     }
 
     @Override
-    public Optional<User> findByEmail(String email) {
-        return userRepository.findByEmail(email);
-    }
-
-    @Override
     public User signIn(SignInDto signInDto) throws EmailExistsException, UsernameExistsException {
         if (emailExist(signInDto.getEmail()))
             throw new EmailExistsException("L'email existe déjà !!!");
@@ -52,22 +45,12 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
         }
     }
 
-    @Override
-    public User login(LoginDto loginDto) {
-        return userRepository.findByUsernameAndPassword(loginDto.getUsername(), loginDto.getPassword()).orElse(null);
-    }
-
     public boolean emailExist(String email) {
         return userRepository.findByEmail(email).isPresent();
     }
 
     public boolean usernameExist(String username) {
         return userRepository.findByEmail(username).isPresent();
-    }
-
-    @Override
-    public List<User> findAll() {
-        return userRepository.findAll();
     }
 
     @Override
