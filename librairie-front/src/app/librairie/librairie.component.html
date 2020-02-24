@@ -2,7 +2,6 @@
 <div class="alert alert-danger" *ngIf="!collection">
   Une erreur est survenue, veuillez réessayer plus tard !
 </div>
-<h1 *ngIf="collection">Liste de la collection</h1>
 <div class="container">
   <div class="row">
     <div class="card col-3 offset-1 mb-2" *ngFor="let livre of collection">
@@ -14,7 +13,8 @@
         <p class="card-text">{{livre.maisonEdition.nom}}</p>
         <p class="card-text">{{livre.quantite}} exemplaires restants</p>
         <div class="mb-0 text-right">
-          <button class="btn btn-primary" *ngIf="livre.quantite > 0" (click)="addToPanier(livre)">Ajouter au panier</button>
+          <button class="btn btn-primary" *ngIf="livre.quantite > 0" (click)="addToPanier(livre)">Ajouter au panier
+          </button>
         </div>
       </div>
     </div>

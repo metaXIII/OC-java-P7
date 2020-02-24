@@ -9,7 +9,7 @@ import {ReservationService} from "../../service/reservation.service"
   styleUrls: ['./librairie.component.scss']
 })
 export class LibrairieComponent implements OnInit {
-  private collection: [Livre] = null
+  private collection: [Livre]
 
   constructor(private librairieService: LibrairieService, private reservationService: ReservationService) {
   }
