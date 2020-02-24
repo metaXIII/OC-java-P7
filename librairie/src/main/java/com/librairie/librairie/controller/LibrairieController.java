@@ -1,4 +1,4 @@
-package com.librairie.librairie;
+package com.librairie.librairie.controller;
 
 import com.librairie.librairie.dto.CollectionDto;
 import com.librairie.librairie.service.ILibrairieService;
