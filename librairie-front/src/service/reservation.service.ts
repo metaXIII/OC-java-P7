@@ -1,7 +1,8 @@
-import {Injectable} from '@angular/core';
-import {HttpClient} from "@angular/common/http"
-import {Livre}      from "../models/livre.model"
-import {Subject}    from "rxjs"
+import {Injectable}  from '@angular/core';
+import {HttpClient}  from "@angular/common/http"
+import {Livre}       from "../models/livre.model"
+import {Subject}     from "rxjs"
+import {UserService} from "./user.service"
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,7 @@ export class ReservationService {
   public count            = new Subject<number>();
   private collection: any = []
 
-  constructor(private HttpClient: HttpClient) {
+  constructor(private HttpClient: HttpClient, private userService: UserService) {
   }
 
   addToPanier = (livre: Livre) => {
@@ -26,5 +27,11 @@ export class ReservationService {
   deleteToPanier = (livre: Livre) => {
     this.collection.pop(livre)
     this.count.next(this.collection.length)
+  }
+
+  reserve = (collection: [Livre]) => {
+    let data: any = collection
+    data.push(this.userService.getUser())
+    return this.HttpClient.post("/service/reservation/reserve", data);
   }
 }

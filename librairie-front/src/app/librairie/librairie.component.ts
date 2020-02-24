@@ -10,6 +10,7 @@ import {ReservationService} from "../../service/reservation.service"
 })
 export class LibrairieComponent implements OnInit {
   private collection: [Livre]
+  private error : boolean = false
 
   constructor(private librairieService: LibrairieService, private reservationService: ReservationService) {
   }
@@ -21,8 +22,8 @@ export class LibrairieComponent implements OnInit {
   private init() {
     this.librairieService.findAll().subscribe((response: [Livre]) => {
       this.collection = response
-    }, error => {
-      console.log(error)
+    }, () => {
+      this.error = true
     })
   }
 

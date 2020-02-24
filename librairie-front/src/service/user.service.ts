@@ -21,6 +21,7 @@ export class UserService {
 
   logout() {
     this.user = null
+    this.httpClient.get("/service/user/logout")
   }
 
   isConnected = () => {
@@ -32,6 +33,7 @@ export class UserService {
   }
 
   login = (form: any) => {
+    this.logout()
     const options = new HttpHeaders(form ? {authorization: 'Basic ' + btoa(form.username + ':' + form.password)} : {});
     return this.httpClient.get('/service/user/info', {headers: options});
   }

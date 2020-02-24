@@ -19,4 +19,9 @@ export class PanierComponent implements OnInit {
   deleteToPanier(livre: Livre) {
     this.reservationService.deleteToPanier(livre);
   }
+
+  reserve() {
+    this.reservationService.reserve(this.collection);
+    alert("reservation en cours")
+  }
 }
