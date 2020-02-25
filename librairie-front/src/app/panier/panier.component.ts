@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import {Livre}               from "../../models/livre.model"
-import {ReservationService}  from "../../service/reservation.service"
+import {Component, OnInit}  from '@angular/core';
+import {Livre}              from "../../models/livre.model"
+import {ReservationService} from "../../service/reservation.service"
+import {Router}             from "@angular/router"
 
 @Component({
   selector: 'app-panier',
@@ -10,7 +11,8 @@ import {ReservationService}  from "../../service/reservation.service"
 export class PanierComponent implements OnInit {
   collection: [Livre] = null
 
-  constructor(private reservationService: ReservationService) {}
+  constructor(private reservationService: ReservationService, private router: Router) {
+  }
 
   ngOnInit() {
     this.collection = this.reservationService.getPanier()
@@ -21,7 +23,13 @@ export class PanierComponent implements OnInit {
   }
 
   reserve() {
-    this.reservationService.reserve(this.collection);
-    alert("reservation en cours")
+    this.reservationService.reserve(this.collection).subscribe(
+      (response) => {
+        this.reservationService.deleteAllToPanier();
+        this.router.navigate(['reservation'])
+      }, error => {
+        console.error(error)
+      }
+    );
   }
 }

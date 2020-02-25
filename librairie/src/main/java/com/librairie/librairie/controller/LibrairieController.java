@@ -23,4 +23,9 @@ public class LibrairieController {
     public ResponseEntity find(@RequestBody CollectionDto collectionDto) {
         return new ResponseEntity(librairieService.find(collectionDto), HttpStatus.ACCEPTED);
     }
+
+    @GetMapping("/findById/{id}")
+    public ResponseEntity findById(@PathVariable("id") long id) {
+        return librairieService.findById(id);
+    }
 }

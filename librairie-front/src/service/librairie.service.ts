@@ -16,4 +16,8 @@ export class LibrairieService {
   findByFields = (search: Search) => {
     return this.httpClient.post('/service/librairie/find', search)
   }
+
+  findById = (id : string) => {
+    return this.httpClient.get("/service/librairie/findById/" + Number(id))
+  }
 }

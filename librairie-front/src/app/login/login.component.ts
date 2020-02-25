@@ -9,7 +9,7 @@ import {Router}                             from "@angular/router"
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup
-  error : boolean = false
+  error: boolean = false
 
   constructor(private formBuilder: FormBuilder, private userService: UserService, private router: Router) {
   }
@@ -19,7 +19,6 @@ export class LoginComponent implements OnInit {
   }
 
   Submit() {
-    console.log("connexion en cours")
     let formValue = this.loginForm.value
     let user      = {username: formValue['username'], password: formValue['password']}
     this.userService.login(user).subscribe((response: User) => {

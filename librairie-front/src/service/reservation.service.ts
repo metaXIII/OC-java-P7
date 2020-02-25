@@ -11,7 +11,7 @@ export class ReservationService {
   public count            = new Subject<number>();
   private collection: any = []
 
-  constructor(private HttpClient: HttpClient, private userService: UserService) {
+  constructor(private httpClient: HttpClient, private userService: UserService) {
   }
 
   addToPanier = (livre: Livre) => {
@@ -29,9 +29,19 @@ export class ReservationService {
     this.count.next(this.collection.length)
   }
 
+  deleteAllToPanier = () => {
+    this.collection = []
+  }
+
   reserve = (collection: [Livre]) => {
-    let data: any = collection
-    data.push(this.userService.getUser())
-    return this.HttpClient.post("/service/reservation/reserve", data);
+    let data: any = {
+      collection: collection,
+      user: this.userService.getUser()
+    }
+    return this.httpClient.post("/service/reservation/reserve", data);
+  }
+
+  getAllReservation = () => {
+    return this.httpClient.post("/service/reservation/reservations", this.userService.getUser())
   }
 }
