@@ -10,11 +10,11 @@ import javax.persistence.Id;
 import java.util.Collection;
 
 @Entity
-@JsonIgnoreProperties(value = {"id", "password", "authorities"})
+@JsonIgnoreProperties(value = {"password", "authorities"})
 public class User implements UserDetails {
     @Id
     @GeneratedValue
-    private long id;
+    private long   id;
     private String username;
     private String password;
     private String email;
