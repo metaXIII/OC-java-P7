@@ -1,5 +1,9 @@
 <app-account></app-account>
 <div class="alert alert-danger" *ngIf="empty">Il n'existe aucune réservation pour cet utilisateur</div>
+<div class="alert alert-danger" *ngIf="error">Une erreur s'est produite lors de la demande, merci de réessayer plus
+  tard
+</div>
+<div class="alert alert-success" *ngIf="success">La demande a bien été prise en compte</div>
 <div class="row">
   <div class="card col-12 mb-2" *ngFor="let reservation of reservations, let i = index">
     <div class="card-body row">
@@ -12,13 +16,17 @@
           </p>
         </div>
       </div>
-      <div class="col-4 text-right position-absolute datePosition">
+      <div class="col-4 text-right position-absolute datePosition mb-2">
         <div class="font-italic small">Date de réservation : {{reservation.dateReservation | date: 'd/MM/yyyy' }}</div>
-        <div class="font-italic small">Date de réservation : {{reservation.dateLimite | date: 'd/MM/yyyy'}}</div>
+        <div class="font-italic small">Date de retour : {{reservation.dateLimite | date: 'd/MM/yyyy'}}</div>
         <p class="font-italic small"
-           [ngStyle]="{color : getDateCalculate(reservation.dateReservation, reservation.dateLimite) < 0 ? '#ff0000' : ''}">
-          Il vous reste : {{getDateCalculate(reservation.dateReservation, reservation.dateLimite)}} jours
+           [ngStyle]="{color : this.reservationService.calculDate(reservation) < 0 ? '#ff0000' : ''}">
+          Il vous reste : {{this.reservationService.calculDate(reservation)}} jours
         </p>
+        <button class="btn btn-secondary" *ngIf="this.reservationService.calculDate(reservation) < 0"
+                (click)="extend(reservation)">
+          Étendre la réservation
+        </button>
       </div>
     </div>
   </div>

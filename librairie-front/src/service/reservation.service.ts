@@ -3,6 +3,7 @@ import {HttpClient}  from "@angular/common/http"
 import {Livre}       from "../models/livre.model"
 import {Subject}     from "rxjs"
 import {UserService} from "./user.service"
+import {Reservation} from "../models/reservation.model"
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +13,12 @@ export class ReservationService {
   public collection: any = []
 
   constructor(private httpClient: HttpClient, private userService: UserService) {
+  }
+
+  calculDate = (reservation: Reservation) => {
+    let date1 = new Date(reservation.dateReservation);
+    let date2 = new Date(reservation.dateLimite);
+    return ((date2.getTime() - date1.getTime()) / (1000 * 3600 * 24))
   }
 
   addToPanier = (livre: Livre) => {
@@ -43,5 +50,9 @@ export class ReservationService {
 
   getAllReservation = () => {
     return this.httpClient.post("/service/reservation/reservations", this.userService.getUser())
+  }
+
+  extend = (reservation: Reservation) => {
+    return this.httpClient.put("/service/reservation/extend", reservation);
   }
 }

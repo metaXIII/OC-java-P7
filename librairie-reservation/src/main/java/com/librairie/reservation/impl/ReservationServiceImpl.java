@@ -2,6 +2,7 @@ package com.librairie.reservation.impl;
 
 import com.librairie.reservation.beans.LivreBean;
 import com.librairie.reservation.beans.UserBean;
+import com.librairie.reservation.dto.ReservDto;
 import com.librairie.reservation.dto.ReservationDto;
 import com.librairie.reservation.model.Reservation;
 import com.librairie.reservation.proxies.GatewayProxy;
@@ -29,7 +30,7 @@ public class ReservationServiceImpl implements IReservationService {
     private ReservationRepository reservationRepository;
 
     @Override
-    public ResponseEntity reserve(ReservationDto data) {
+    public ResponseEntity reserve(ReservDto data) {
         Reservation   reservation   = new Reservation();
         StringBuilder stringBuilder = new StringBuilder();
         System.out.println(stringBuilder.toString());
@@ -65,8 +66,20 @@ public class ReservationServiceImpl implements IReservationService {
     public List<Reservation> getReservations(UserBean userBean) {
         Optional<UserBean> user = gatewayProxy.getUser(userBean.getUsername()).getBody();
         if (Objects.requireNonNull(user).isPresent()) {
-            return reservationRepository.findAllByUserIdAndFinishedIsFalse(user.get().getId());
+            return reservationRepository.findAllByUserIdAndFinishedIsFalseOrderByIdDesc(user.get().getId());
         }
         return new ArrayList<>();
+    }
+
+    @Override
+    public HttpStatus extendReservation(ReservationDto reservationDto) {
+        Optional<Reservation> reservation = reservationRepository.findById(reservationDto.getId());
+        if (reservation.isPresent() && !reservation.get().isExtended()) {
+            reservation.get().setExtended(true);
+            reservation.get().setDateLimite(reservation.get().getDateLimite().plusWeeks(4));
+            reservationRepository.save(reservation.get());
+            return HttpStatus.ACCEPTED;
+        }
+        return HttpStatus.BAD_REQUEST;
     }
 }

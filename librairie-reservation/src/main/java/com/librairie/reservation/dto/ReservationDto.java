@@ -1,14 +1,27 @@
 package com.librairie.reservation.dto;
 
-import com.librairie.reservation.beans.LivreBean;
 import lombok.Data;
 
-import java.io.Serializable;
-import java.util.List;
-import java.util.Map;
+import javax.validation.constraints.NotNull;
+import java.time.LocalDate;
 
 @Data
-public class ReservationDto implements Serializable {
-    private List<LivreBean>     collection;
-    private Map<String, String> user;
+public class ReservationDto {
+    @NotNull
+    private long id;
+
+    @NotNull
+    private String livreId;
+
+    @NotNull
+    private LocalDate dateReservation;
+
+    @NotNull
+    private LocalDate dateLimite;
+
+    @NotNull
+    private boolean extended;
+
+    @NotNull
+    private boolean finished;
 }

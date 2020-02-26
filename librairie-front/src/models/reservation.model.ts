@@ -1,10 +1,8 @@
-import DateTimeFormat = Intl.DateTimeFormat
-
 export class Reservation {
   constructor(public id: number,
               public livreId: string,
-              public dateReservation: DateTimeFormat,
-              public dateLimite: DateTimeFormat,
+              public dateReservation: Date,
+              public dateLimite: Date,
               public extended: boolean,
               public finished: boolean) {
   }

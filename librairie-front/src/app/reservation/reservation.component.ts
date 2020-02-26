@@ -9,10 +9,11 @@ import {Reservation}        from "../../models/reservation.model"
   styleUrls: ['./reservation.component.scss']
 })
 export class ReservationComponent implements OnInit {
-  reservations: any = []
-  empty: boolean    = false
+  reservations: any        = []
+  empty: boolean           = false
   collection: any
-  private color: any
+  private error: boolean   = false
+  private success: boolean = false
 
   constructor(private reservationService: ReservationService, private librairieService: LibrairieService) {
   }
@@ -37,10 +38,20 @@ export class ReservationComponent implements OnInit {
     })
   }
 
-  getDateCalculate(dateReservation: any, dateLimite: any) {
-    let date1 = new Date(dateReservation);
-    let date2 = new Date(dateLimite);
-    let date  = (date2.getTime() - date1.getTime()) / (1000 * 3600 * 24)
-    return date;
+  extend(reservation: Reservation) {
+    this.reservationService.extend(reservation).subscribe(() => {
+      this.success           = true
+      reservation.dateLimite = this.addDays(reservation.dateLimite, 28)
+      reservation.extended   = true
+    }, () => {
+      this.error = true
+    })
+  }
+
+
+  addDays(date, days) {
+    let result = new Date(date);
+    result.setDate(result.getDate() + days);
+    return result;
   }
 }
