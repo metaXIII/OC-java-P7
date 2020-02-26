@@ -5,7 +5,7 @@ INSERT INTO LIVRE(ID, NOM, AUTEUR, DATEPARUTION, ISBN, CATEGORIE, MAISONEDITION,
 VALUES (1, 'Harry potter à l''école des sorciers', 'AUTEUR TEST', CURRENT_DATE(), 'ISBN TEST', 'EROTIQUE', 1,
         'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab accusamus alias autem commodi
 eligendi enim error impedit iste labore neque nobis nostrum odit perspiciatis, quisquam quod repellat rerum, temporibus vitae?',
-        0);
+        1);
 INSERT INTO LIVRE(ID, NOM, AUTEUR, DATEPARUTION, ISBN, CATEGORIE, MAISONEDITION, RESUME, QUANTITE)
 VALUES (2, 'Dragon Ball Z', 'AUTEUR TEST2', CURRENT_DATE(), 'ISBN TEST2', 'ADOLESCENT', 1,
         'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab accusamus alias autem commodi

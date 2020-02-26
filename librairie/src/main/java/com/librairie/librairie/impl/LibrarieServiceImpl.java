@@ -33,4 +33,17 @@ public class LibrarieServiceImpl implements ILibrairieService {
     public ResponseEntity<Optional<Livre>> findById(long id) {
         return new ResponseEntity<Optional<Livre>>(librairieRepository.findById(id), HttpStatus.ACCEPTED);
     }
+
+    @Override
+    public ResponseEntity<Boolean> reserve(String id) {
+        Optional<Livre> livre = librairieRepository.findById(Long.parseLong(id));
+        if (livre.isPresent()) {
+            if (livre.get().getQuantite() <= 0)
+                return new ResponseEntity<>(false, HttpStatus.CONFLICT);
+            livre.get().setQuantite(livre.get().getQuantite() - 1);
+            librairieRepository.save(livre.get());
+            return new ResponseEntity<>(true, HttpStatus.ACCEPTED);
+        }
+        return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
+    }
 }

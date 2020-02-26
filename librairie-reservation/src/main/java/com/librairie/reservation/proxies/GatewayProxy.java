@@ -9,7 +9,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import java.util.Optional;
 
 @FeignClient(name = "librairie-gateway", url = "http://localhost:8000")
-public interface UserServiceProxy {
+public interface GatewayProxy {
+    @GetMapping("/api/librairie/reserve/{id}")
+    ResponseEntity<Optional<Boolean>> CheckStock(@PathVariable("id") String id);
+
     @GetMapping("/api/user/me/{username}")
-    ResponseEntity<Optional<UserBean>> info(@PathVariable("username") String username);
+    ResponseEntity<Optional<UserBean>> getUser(@PathVariable("username") String username);
 }

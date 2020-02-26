@@ -9,7 +9,7 @@ import {UserService} from "./user.service"
 })
 export class ReservationService {
   public count            = new Subject<number>();
-  private collection: any = []
+  public collection: any = []
 
   constructor(private httpClient: HttpClient, private userService: UserService) {
   }

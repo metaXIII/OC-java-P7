@@ -13,4 +13,6 @@ public interface ILibrairieService {
     List<Livre> find(CollectionDto collectionDto);
 
     ResponseEntity<Optional<Livre>> findById(long id);
+
+    ResponseEntity<Boolean> reserve(String id);
 }

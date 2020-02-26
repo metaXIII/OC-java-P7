@@ -28,4 +28,9 @@ public class LibrairieController {
     public ResponseEntity findById(@PathVariable("id") long id) {
         return librairieService.findById(id);
     }
+
+    @GetMapping("/reserve/{id}")
+    public ResponseEntity<Boolean> reserve(@PathVariable("id") String id) {
+        return librairieService.reserve(id);
+    }
 }

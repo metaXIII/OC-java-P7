@@ -10,7 +10,7 @@ import {ReservationService} from "../../service/reservation.service"
 })
 export class LibrairieComponent implements OnInit {
   private collection: [Livre]
-  private error : boolean = false
+  private error: boolean = false
 
   constructor(private librairieService: LibrairieService, private reservationService: ReservationService) {
   }
@@ -27,7 +27,13 @@ export class LibrairieComponent implements OnInit {
     })
   }
 
-  private addToPanier(livre : Livre) {
-    this.reservationService.addToPanier(livre)
+  private addToPanier(livre: Livre) {
+    let quantity = this.reservationService.collection.filter(x => x.id == livre.id).length
+    if (quantity == livre.quantite) {
+      livre.quantite = 0
+    } else {
+      livre.quantite--
+      this.reservationService.addToPanier(livre)
+    }
   }
 }

@@ -10,6 +10,7 @@ import {Router}             from "@angular/router"
 })
 export class PanierComponent implements OnInit {
   collection: [Livre] = null
+  error: boolean      = false
 
   constructor(private reservationService: ReservationService, private router: Router) {
   }
@@ -24,11 +25,15 @@ export class PanierComponent implements OnInit {
 
   reserve() {
     this.reservationService.reserve(this.collection).subscribe(
-      (response) => {
-        this.reservationService.deleteAllToPanier();
-        this.router.navigate(['reservation'])
-      }, error => {
-        console.error(error)
+      (response: any) => {
+        this.reservationService.deleteAllToPanier()
+        if (response.statusCodeValue === 409) {
+          this.error = true
+        } else {
+          this.router.navigate(['reservation'])
+        }
+      }, () => {
+        this.error = true
       }
     );
   }

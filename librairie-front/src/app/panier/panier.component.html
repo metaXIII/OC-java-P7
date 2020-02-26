@@ -1,4 +1,9 @@
 <app-account></app-account>
+<div class="alert alert-danger" *ngIf="error">
+  Une erreur est survenue <br>
+  Une réservation a été prise en compte sur les éléments possible :)
+  Veuillez tenter une autre réservation pour les éléments qui ne sont pas passés
+</div>
 <div class="container" *ngIf="collection">
   <div class="row">
     <div class="card col-12 mb-2" *ngFor="let livre of collection">
@@ -8,7 +13,7 @@
           <h6 class="card-subtitle mb-2 text-muted">{{livre.auteur}}</h6>
         </div>
         <div class="col-4 text-right">
-          <button class="btn btn-primary" *ngIf="livre.quantite > 0" (click)="deleteToPanier(livre)">
+          <button class="btn btn-primary" (click)="deleteToPanier(livre)">
             Retirer du panier
           </button>
         </div>

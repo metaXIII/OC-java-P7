@@ -4,7 +4,7 @@ import com.librairie.reservation.beans.LivreBean;
 import com.librairie.reservation.beans.UserBean;
 import com.librairie.reservation.dto.ReservationDto;
 import com.librairie.reservation.model.Reservation;
-import com.librairie.reservation.proxies.UserServiceProxy;
+import com.librairie.reservation.proxies.GatewayProxy;
 import com.librairie.reservation.repositories.ReservationRepository;
 import com.librairie.reservation.service.IReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +23,7 @@ import java.util.Optional;
 @Transactional
 public class ReservationServiceImpl implements IReservationService {
     @Autowired
-    private UserServiceProxy userServiceProxy;
+    private GatewayProxy gatewayProxy;
 
     @Autowired
     private ReservationRepository reservationRepository;
@@ -33,25 +33,37 @@ public class ReservationServiceImpl implements IReservationService {
         Reservation   reservation   = new Reservation();
         StringBuilder stringBuilder = new StringBuilder();
         System.out.println(stringBuilder.toString());
-        Optional<UserBean> user = userServiceProxy.info(data.getUser().get("username")).getBody();
+        Optional<UserBean> user = gatewayProxy.getUser(data.getUser().get("username")).getBody();
         if (Objects.requireNonNull(user).isPresent()) {
-            for (LivreBean livre : data.getCollection())
-                stringBuilder.append(stringBuilder.toString().isEmpty() ? "" : ",").append(livre.getId());
-            reservation.setLivreId(stringBuilder.toString());
-            reservation.setUserId(user.get().getId());
-            reservation.setDateReservation(LocalDate.now());
-            reservation.setExtended(false);
-            reservation.setFinished(false);
-            reservation.setDateLimite(reservation.getDateReservation().plusWeeks(4));
-            reservationRepository.save(reservation);
+            try {
+                for (LivreBean livre : data.getCollection()) {
+                    if (Objects.requireNonNull(gatewayProxy.CheckStock(String.valueOf(livre.getId())).getBody()).isPresent())
+                        stringBuilder.append(stringBuilder.toString().isEmpty() ? "" : ",").append(livre.getId());
+                }
+                makeReservation(reservation, stringBuilder, user);
+            } catch (Exception e) {
+                makeReservation(reservation, stringBuilder, user);
+                return new ResponseEntity<>(HttpStatus.CONFLICT);
+            }
             return new ResponseEntity<>(HttpStatus.CREATED);
         }
         return new ResponseEntity<>(HttpStatus.CONFLICT);
     }
 
+    private void makeReservation(Reservation reservation, StringBuilder stringBuilder, Optional<UserBean> user) {
+        reservation.setLivreId(stringBuilder.toString());
+        reservation.setUserId(user.get().getId());
+        reservation.setDateReservation(LocalDate.now());
+        reservation.setExtended(false);
+        reservation.setFinished(false);
+        reservation.setDateLimite(reservation.getDateReservation().plusWeeks(4));
+        if (!stringBuilder.toString().isEmpty())
+            reservationRepository.save(reservation);
+    }
+
     @Override
     public List<Reservation> getReservations(UserBean userBean) {
-        Optional<UserBean> user = userServiceProxy.info(userBean.getUsername()).getBody();
+        Optional<UserBean> user = gatewayProxy.getUser(userBean.getUsername()).getBody();
         if (Objects.requireNonNull(user).isPresent()) {
             return reservationRepository.findAllByUserIdAndFinishedIsFalse(user.get().getId());
         }
