@@ -9,9 +9,9 @@ import {Reservation}        from "../../models/reservation.model"
   styleUrls: ['./reservation.component.scss']
 })
 export class ReservationComponent implements OnInit {
-  reservations: any   = []
-  empty: boolean      = false
-  collection: any[][] = [[], []]
+  reservations: any = []
+  empty: boolean    = false
+  collection: any
   private color: any
 
   constructor(private reservationService: ReservationService, private librairieService: LibrairieService) {
@@ -19,15 +19,13 @@ export class ReservationComponent implements OnInit {
 
   ngOnInit() {
     this.reservationService.getAllReservation().subscribe((resp: [Reservation]) => {
+      this.collection = new Array(resp.length)
       resp.forEach((reservation, indexReservation) => {
         this.reservations.push(reservation)
         let el = reservation.livreId.split(',')
         el.forEach((id, indexLivre) => {
+          this.collection[indexReservation] = new Array(indexLivre)
           this.librairieService.findById(id).subscribe((response) => {
-            console.log("aze")
-            console.log(indexReservation)
-            console.log(indexLivre)
-            console.log(this.collection)
             this.collection[indexReservation][indexLivre] = [response]
           }, (error) => {
             console.error(error)
@@ -37,7 +35,6 @@ export class ReservationComponent implements OnInit {
     }, error => {
       this.empty = true
     })
-    console.log(this.reservations)
   }
 
   getDateCalculate(dateReservation: any, dateLimite: any) {
