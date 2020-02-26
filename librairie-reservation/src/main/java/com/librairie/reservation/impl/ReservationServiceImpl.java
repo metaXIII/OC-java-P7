@@ -33,7 +33,6 @@ public class ReservationServiceImpl implements IReservationService {
     public ResponseEntity reserve(ReservDto data) {
         Reservation   reservation   = new Reservation();
         StringBuilder stringBuilder = new StringBuilder();
-        System.out.println(stringBuilder.toString());
         Optional<UserBean> user = gatewayProxy.getUser(data.getUser().get("username")).getBody();
         if (Objects.requireNonNull(user).isPresent()) {
             try {
@@ -43,7 +42,6 @@ public class ReservationServiceImpl implements IReservationService {
                 }
                 makeReservation(reservation, stringBuilder, user);
             } catch (Exception e) {
-                makeReservation(reservation, stringBuilder, user);
                 return new ResponseEntity<>(HttpStatus.CONFLICT);
             }
             return new ResponseEntity<>(HttpStatus.CREATED);

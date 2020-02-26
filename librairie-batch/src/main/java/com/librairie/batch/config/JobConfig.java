@@ -1,6 +1,6 @@
 package com.librairie.batch.config;
 
-import com.librairie.batch.job.CustomStep;
+import com.librairie.batch.job.CustomTask;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
@@ -12,11 +12,17 @@ import static com.librairie.batch.job.BatchConstant.JOB_NAME;
 
 @Configuration
 public class JobConfig {
+    private final CustomTask customTask;
+
+    public JobConfig(CustomTask CustomTask) {
+        this.customTask = CustomTask;
+    }
+
     @Bean
     protected Step customStep(StepBuilderFactory stepBuilders) {
         return stepBuilders
                 .get("customStep")
-                .tasklet(new CustomStep())
+                .tasklet(customTask)
                 .build();
     }
 
