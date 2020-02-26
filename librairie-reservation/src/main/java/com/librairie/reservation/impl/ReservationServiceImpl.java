@@ -42,6 +42,7 @@ public class ReservationServiceImpl implements IReservationService {
             reservation.setDateReservation(LocalDate.now());
             reservation.setExtended(false);
             reservation.setFinished(false);
+            reservation.setDateLimite(reservation.getDateReservation().plusWeeks(4));
             reservationRepository.save(reservation);
             return new ResponseEntity<>(HttpStatus.CREATED);
         }
