@@ -26,6 +26,10 @@ export class SearchComponent implements OnInit {
     let search = new Search(form['nom'], form['auteur'], form['categorie'])
     this.librairieService.findByFields(search).subscribe((response: [Livre]) => {
       this.collection = response
+      this.collection.forEach((livre: Livre) => {
+        livre.quantite =
+          this.reservationService.collection.filter(x => x.id == livre.id).length == livre.quantite ? 0 : livre.quantite
+      })
       console.log(response)
     }, error => {
       console.log(error)
@@ -33,7 +37,13 @@ export class SearchComponent implements OnInit {
   }
 
   addToPanier(livre: Livre) {
-    this.reservationService.addToPanier(livre)
+    let quantity = this.reservationService.collection.filter(x => x.id == livre.id).length
+    if (quantity == livre.quantite) {
+      livre.quantite = 0
+    } else {
+      livre.quantite--
+      this.reservationService.addToPanier(livre)
+    }
   }
 
   private initForm() {

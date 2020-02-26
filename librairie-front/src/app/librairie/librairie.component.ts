@@ -22,6 +22,10 @@ export class LibrairieComponent implements OnInit {
   private init() {
     this.librairieService.findAll().subscribe((response: [Livre]) => {
       this.collection = response
+      this.collection.forEach((livre: Livre) => {
+        livre.quantite =
+          this.reservationService.collection.filter(x => x.id == livre.id).length == livre.quantite ? 0 : livre.quantite
+      })
     }, () => {
       this.error = true
     })
