@@ -12,6 +12,7 @@ export class ReservationComponent implements OnInit {
   reservations: any   = []
   empty: boolean      = false
   collection: any[][] = [[], []]
+  private color: any
 
   constructor(private reservationService: ReservationService, private librairieService: LibrairieService) {
   }
@@ -23,6 +24,10 @@ export class ReservationComponent implements OnInit {
         let el = reservation.livreId.split(',')
         el.forEach((id, indexLivre) => {
           this.librairieService.findById(id).subscribe((response) => {
+            console.log("aze")
+            console.log(indexReservation)
+            console.log(indexLivre)
+            console.log(this.collection)
             this.collection[indexReservation][indexLivre] = [response]
           }, (error) => {
             console.error(error)
@@ -32,10 +37,13 @@ export class ReservationComponent implements OnInit {
     }, error => {
       this.empty = true
     })
-    console.log(this.collection)
+    console.log(this.reservations)
   }
 
-  debug(livre: any) {
-    debugger
+  getDateCalculate(dateReservation: any, dateLimite: any) {
+    let date1 = new Date(dateReservation);
+    let date2 = new Date(dateLimite);
+    let date  = (date2.getTime() - date1.getTime()) / (1000 * 3600 * 24)
+    return date;
   }
 }
