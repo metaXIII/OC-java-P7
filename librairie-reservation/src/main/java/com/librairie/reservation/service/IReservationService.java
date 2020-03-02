@@ -15,4 +15,6 @@ public interface IReservationService {
     List<Reservation> getReservations(UserBean user);
 
     HttpStatus extendReservation(ReservationDto reservationDto);
+
+    List<Reservation> getInvalidReservations();
 }

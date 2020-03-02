@@ -1,26 +1,25 @@
 package com.librairie.batch.controller;
 
-import com.librairie.batch.test.Test;
+import com.librairie.batch.service.EmailService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+import javax.mail.MessagingException;
+
+@RestController
 @RequestMapping("/api/batch/")
 public class SendEmail {
 
-    private final Test test;
+    private final EmailService emailService;
 
-    public SendEmail(Test test) {
-        this.test = test;
+    public SendEmail(EmailService emailService) {
+        this.emailService = emailService;
     }
 
-
-    @ResponseBody
-    @GetMapping("sendEmail")
-    public String sendSimpleEmail() {
-        test.test();
-        return "aze";
+    @GetMapping("send")
+    public void send() throws MessagingException {
+        this.emailService.sendEmail();
     }
 }

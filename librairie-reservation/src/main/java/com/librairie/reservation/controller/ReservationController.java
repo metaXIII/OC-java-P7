@@ -3,11 +3,14 @@ package com.librairie.reservation.controller;
 import com.librairie.reservation.beans.UserBean;
 import com.librairie.reservation.dto.ReservDto;
 import com.librairie.reservation.dto.ReservationDto;
+import com.librairie.reservation.model.Reservation;
 import com.librairie.reservation.service.IReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/reservation/")
@@ -29,5 +32,15 @@ public class ReservationController {
     @PutMapping("extend")
     public ResponseEntity extend(@RequestBody ReservationDto reservationDto) {
         return new ResponseEntity(reservationService.extendReservation(reservationDto));
+    }
+
+    @GetMapping("validate")
+    public ResponseEntity<List<Reservation>> validate() {
+        return new ResponseEntity<>(reservationService.getInvalidReservations(), HttpStatus.ACCEPTED);
+    }
+
+    @GetMapping("test")
+    public String test() {
+        return "test is passed";
     }
 }

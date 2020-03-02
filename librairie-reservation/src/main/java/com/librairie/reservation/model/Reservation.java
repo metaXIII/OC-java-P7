@@ -1,6 +1,5 @@
 package com.librairie.reservation.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -8,7 +7,6 @@ import java.time.LocalDate;
 
 @Data
 @Entity
-@JsonIgnoreProperties(value = {"userId"})
 public class Reservation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

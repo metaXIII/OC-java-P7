@@ -31,9 +31,9 @@ public class ReservationServiceImpl implements IReservationService {
 
     @Override
     public ResponseEntity reserve(ReservDto data) {
-        Reservation   reservation   = new Reservation();
-        StringBuilder stringBuilder = new StringBuilder();
-        Optional<UserBean> user = gatewayProxy.getUser(data.getUser().get("username")).getBody();
+        Reservation        reservation   = new Reservation();
+        StringBuilder      stringBuilder = new StringBuilder();
+        Optional<UserBean> user          = gatewayProxy.getUser(data.getUser().get("username")).getBody();
         if (Objects.requireNonNull(user).isPresent()) {
             try {
                 for (LivreBean livre : data.getCollection()) {
@@ -79,5 +79,29 @@ public class ReservationServiceImpl implements IReservationService {
             return HttpStatus.ACCEPTED;
         }
         return HttpStatus.BAD_REQUEST;
+    }
+
+    @Override
+    public List<Reservation> getInvalidReservations() {
+        LocalDate         localDate = LocalDate.now();
+        List<Reservation> result    = new ArrayList<>();
+        extendReservations(localDate);
+        List<Reservation> controlReservation = reservationRepository.findAllByFinishedIsFalseAndExtendedIsTrue();
+        controlReservation.forEach(reservation -> {
+            if (reservation.getDateLimite().isBefore(localDate))
+                result.add(reservation);
+        });
+        return result;
+    }
+
+    private void extendReservations(LocalDate localDate) {
+        List<Reservation> update = reservationRepository.findAllByFinishedIsFalseAndExtendedIsFalse();
+        update.forEach(reservation -> {
+            if (reservation.getDateLimite().isBefore(localDate)) {
+                reservation.setExtended(true);
+                reservation.setDateLimite(reservation.getDateLimite().plusDays(28));
+                reservationRepository.save(reservation);
+            }
+        });
     }
 }

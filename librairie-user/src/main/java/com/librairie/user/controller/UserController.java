@@ -38,4 +38,9 @@ public class UserController {
     public ResponseEntity<Optional<User>> getUser(@PathVariable("name") String username) {
         return new ResponseEntity<>(userService.findbyUsername(username), HttpStatus.ACCEPTED);
     }
+
+    @GetMapping("get/{id}")
+    public ResponseEntity<Optional<User>> findUserById(@PathVariable("id") long id) {
+        return new ResponseEntity<>(userService.findById(id), HttpStatus.ACCEPTED);
+    }
 }

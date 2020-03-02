@@ -7,4 +7,8 @@ import java.util.List;
 
 public interface ReservationRepository extends JpaRepository<Reservation, Long> {
     List<Reservation> findAllByUserIdAndFinishedIsFalseOrderByIdDesc(long id);
+
+    List<Reservation> findAllByFinishedIsFalseAndExtendedIsTrue();
+
+    List<Reservation> findAllByFinishedIsFalseAndExtendedIsFalse();
 }
