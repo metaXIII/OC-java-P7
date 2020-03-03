@@ -13,7 +13,6 @@ export class ConnectionComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.userService.getUser())
     if (this.userService.getUser()) {
       this.router.navigate(['librairie'])
     }
