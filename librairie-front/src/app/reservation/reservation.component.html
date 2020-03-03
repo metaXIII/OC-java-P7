@@ -8,7 +8,7 @@
   <div class="card col-12 mb-2" *ngFor="let reservation of reservations, let i = index">
     <div class="card-body row">
       <div class="col-8">
-        <h5 class="card-title">Réservation n°{{i + 1}}</h5>
+        <h5 class="card-title">Réservation n°{{reservation.id}}</h5>
         <h6 class="card-subtitle mb-2 text-muted">Liste du(des) livre(s) réservé(s) : </h6>
         <div class="card-text" *ngFor="let livreCollection of collection[i]">
           <p *ngFor="let livre of livreCollection">
@@ -17,14 +17,14 @@
         </div>
       </div>
       <div class="col-4 text-right position-absolute datePosition mb-2">
-        <div class="font-italic small">Date de réservation : {{reservation.dateReservation | date: 'd/MM/yyyy' }}</div>
-        <div class="font-italic small">Date de retour : {{reservation.dateLimite | date: 'd/MM/yyyy'}}</div>
+        <div class="font-italic small">Date de réservation : {{reservation.dateReservation | date: 'dd/MM/yyyy' }}</div>
+        <div class="font-italic small">Date de retour : {{reservation.dateLimite | date: 'dd/MM/yyyy'}}</div>
         <p class="font-italic small"
            [ngStyle]="{color : this.reservationService.calculDate(reservation) < 0 ? '#ff0000' : ''}">
           Il vous reste : {{this.reservationService.calculDate(reservation)}} jours
         </p>
-        <button class="btn btn-secondary" *ngIf="this.reservationService.calculDate(reservation) < 0"
-                (click)="extend(reservation)">
+        <button class="btn btn-secondary" *ngIf="this.reservationService.calculDate(reservation) < 0
+        && !reservation.extended" (click)="extend(reservation)">
           Étendre la réservation
         </button>
       </div>

@@ -16,9 +16,9 @@ export class ReservationService {
   }
 
   calculDate = (reservation: Reservation) => {
-    let date1 = new Date(reservation.dateReservation);
+    let date1 = new Date();
     let date2 = new Date(reservation.dateLimite);
-    return ((date2.getTime() - date1.getTime()) / (1000 * 3600 * 24))
+    return Math.ceil((date2.getTime() - date1.getTime()) / (1000 * 3600 * 24))
   }
 
   addToPanier = (livre: Livre) => {
