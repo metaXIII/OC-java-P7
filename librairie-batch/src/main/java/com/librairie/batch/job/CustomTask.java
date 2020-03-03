@@ -34,7 +34,7 @@ public class CustomTask implements Tasklet, StepExecutionListener {
             emailService.sendEmail();
             logger.info("Tache en cours ...");
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
         }
         return RepeatStatus.FINISHED;
     }
