@@ -1,5 +1,6 @@
 package com.librairie.batch.impl;
 
+import com.librairie.batch.model.Livre;
 import com.librairie.batch.model.Reservation;
 import com.librairie.batch.model.User;
 import com.librairie.batch.proxies.GatewayProxy;
@@ -26,5 +27,11 @@ public class DetailServiceImpl implements IMailService {
     @Override
     public Optional<User> getUser(long userId) {
         return gatewayProxy.getUserWithId(userId);
+    }
+
+    @Override
+    public Livre getLivreById(long id) {
+        Optional<Livre> livre = gatewayProxy.getLivreById(id).getBody();
+        return livre.orElse(new Livre());
     }
 }

@@ -1,5 +1,6 @@
 package com.librairie.batch.service;
 
+import com.librairie.batch.model.Livre;
 import com.librairie.batch.model.Reservation;
 import com.librairie.batch.model.User;
 import org.springframework.http.ResponseEntity;
@@ -11,4 +12,6 @@ public interface IMailService {
     ResponseEntity<List<Reservation>> getReservations();
 
     Optional<User> getUser(long userId);
+
+    Livre getLivreById(long id);
 }
