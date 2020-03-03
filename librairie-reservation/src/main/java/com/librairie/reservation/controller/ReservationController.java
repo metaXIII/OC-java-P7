@@ -38,9 +38,4 @@ public class ReservationController {
     public ResponseEntity<List<Reservation>> validate() {
         return new ResponseEntity<>(reservationService.getInvalidReservations(), HttpStatus.ACCEPTED);
     }
-
-    @GetMapping("test")
-    public String test() {
-        return "test is passed";
-    }
 }
