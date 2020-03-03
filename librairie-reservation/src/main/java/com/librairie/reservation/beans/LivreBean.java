@@ -14,7 +14,7 @@ public class LivreBean {
 
     private Date dateParution;
 
-    private String ISBN;
+    private String isbn;
 
     private String categorie;
 

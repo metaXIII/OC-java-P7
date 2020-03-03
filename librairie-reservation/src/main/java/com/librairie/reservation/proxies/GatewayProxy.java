@@ -11,7 +11,7 @@ import java.util.Optional;
 @FeignClient(name = "librairie-gateway", url = "http://localhost:8000")
 public interface GatewayProxy {
     @GetMapping("/api/librairie/reserve/{id}")
-    ResponseEntity<Optional<Boolean>> CheckStock(@PathVariable("id") String id);
+    ResponseEntity<Optional<Boolean>> checkStock(@PathVariable("id") String id);
 
     @GetMapping("/api/user/me/{username}")
     ResponseEntity<Optional<UserBean>> getUser(@PathVariable("username") String username);

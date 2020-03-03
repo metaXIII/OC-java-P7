@@ -19,7 +19,7 @@ public class Livre {
     @Column(name = "DATEPARUTION")
     private Date dateParution;
 
-    private String ISBN;
+    private String isbn;
 
     private String categorie;
 

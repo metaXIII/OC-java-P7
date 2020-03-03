@@ -37,7 +37,7 @@ public class ReservationServiceImpl implements IReservationService {
         if (Objects.requireNonNull(user).isPresent()) {
             try {
                 for (LivreBean livre : data.getCollection()) {
-                    if (Objects.requireNonNull(gatewayProxy.CheckStock(String.valueOf(livre.getId())).getBody()).isPresent())
+                    if (Objects.requireNonNull(gatewayProxy.checkStock(String.valueOf(livre.getId())).getBody()).isPresent())
                         stringBuilder.append(stringBuilder.toString().isEmpty() ? "" : ",").append(livre.getId());
                 }
                 makeReservation(reservation, stringBuilder, user);

@@ -14,8 +14,8 @@ import static com.librairie.batch.job.BatchConstant.JOB_NAME;
 public class JobConfig {
     private final CustomTask customTask;
 
-    public JobConfig(CustomTask CustomTask) {
-        this.customTask = CustomTask;
+    public JobConfig(CustomTask customTask) {
+        this.customTask = customTask;
     }
 
     @Bean

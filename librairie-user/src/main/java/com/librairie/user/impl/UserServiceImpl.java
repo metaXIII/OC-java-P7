@@ -1,8 +1,8 @@
 package com.librairie.user.impl;
 
 import com.librairie.user.dto.SignInDto;
-import com.librairie.user.exceptions.EmailExistsException;
-import com.librairie.user.exceptions.UsernameExistsException;
+import com.librairie.user.exceptions.EmailExistsExceptionThrowable;
+import com.librairie.user.exceptions.UsernameExistsExceptionThrowable;
 import com.librairie.user.model.User;
 import com.librairie.user.repositories.UserRepository;
 import com.librairie.user.service.IUserService;
@@ -31,11 +31,11 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
     }
 
     @Override
-    public User signIn(SignInDto signInDto) throws EmailExistsException, UsernameExistsException {
+    public User signIn(SignInDto signInDto) throws EmailExistsExceptionThrowable, UsernameExistsExceptionThrowable {
         if (emailExist(signInDto.getEmail()))
-            throw new EmailExistsException("L'email existe déjà !!!");
+            throw new EmailExistsExceptionThrowable("L'email existe déjà !!!");
         else if (usernameExist(signInDto.getUsername()))
-            throw new UsernameExistsException("Le nom d'utilisateur est déjà pris");
+            throw new UsernameExistsExceptionThrowable("Le nom d'utilisateur est déjà pris");
         else {
             User user = new User();
             user.setUsername(signInDto.getUsername());
@@ -54,7 +54,7 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String username) {
         return userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("Il n'existe pas d'utilisateurs avec le nom d'utilisateur " + username));
     }

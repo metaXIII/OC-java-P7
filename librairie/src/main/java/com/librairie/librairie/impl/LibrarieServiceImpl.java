@@ -31,7 +31,7 @@ public class LibrarieServiceImpl implements ILibrairieService {
 
     @Override
     public ResponseEntity<Optional<Livre>> findById(long id) {
-        return new ResponseEntity<Optional<Livre>>(librairieRepository.findById(id), HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(librairieRepository.findById(id), HttpStatus.ACCEPTED);
     }
 
     @Override
