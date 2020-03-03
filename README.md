@@ -11,7 +11,11 @@ Installer java (version 11 du jdk disponible [ici](https://www.oracle.com/techne
   
  ### NodeJS
  NodeJS est téléchargeable à cette [addresse](https://nodejs.org/en/). 
- Merci de prendre la version 13.9.0 
+ Merci de prendre la version 13.9.0
+ 
+ ### Inbucket
+ Inbucket est un serveur smtp pour l'envoi de mail. Pour le module batch, l'envoi de mail est consultable 
+ en local grâce à inbucket disponible [ici](https://www.inbucket.org/binaries/) (Windows/Mac/Linux)
  
  ### Contexte : 
   ```
@@ -68,6 +72,9 @@ Batch
    Merci de lancer le module ConfigServerApplication en premier. Celui ci ira chercher les informations
    contenus dans les applications.yml pour les autres modules. Vous pouvez consulter les 
    propriétés présentes [ici](https://github.com/metaXIII/OC-java-P7-config).
+   
+   Vous pouvez également lancer Inbucket pour le serveur mail.
+   
    Démarrez ensuite les autres modules.
    
    Pour le front, installez d'abord les dépendances du projet ``npm install`` dans le répertoire librairie-front
