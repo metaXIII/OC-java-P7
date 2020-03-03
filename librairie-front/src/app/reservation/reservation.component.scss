@@ -2,3 +2,13 @@
   right: 0;
   bottom: 0;
 }
+
+.position-absolute-custom {
+  position: absolute;
+}
+
+@media screen and (max-width: 720px){
+  .position-absolute-custom {
+    position: relative;
+  }
+}
