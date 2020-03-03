@@ -24,7 +24,7 @@
 <div class="container" *ngIf="collection">
   <hr class="hr">
   <div class="row">
-    <div class="card col-3 offset-1 mb-2" *ngFor="let livre of collection">
+    <div class="card col-lg-3 col-md-5 offset-lg-1 offset-md-1 col-10 offset-1 mb-2" *ngFor="let livre of collection">
       <div class="card-body">
         <h5 class="card-title"><a href="/detail/{{livre.id}}">{{livre.nom}}</a></h5>
         <h6 class="card-subtitle mb-2 text-muted">{{livre.auteur}}</h6>
