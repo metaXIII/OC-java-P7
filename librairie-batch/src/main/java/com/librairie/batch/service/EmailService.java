@@ -57,7 +57,7 @@ public class EmailService {
                 "    <p> Merci de régulariser la réservation " + reservation.getId() + " dans les meilleurs " +
                 "délais. Pour rappel : </p>" +
                 "<ul>" + getList(reservation.getLivreId()) +
-                "</ul><p>Merci de votre compréhension</p><p>Cordialement</p><p>Le service Librairie</p>", true);
+                "</ul><br><p>Merci de votre compréhension</p><p>Cordialement</p><p>Le service Librairie</p>", true);
         helper.setSubject("Urgent : Régularisation de votre réservation !");
         this.mailSender.send(message);
     }
