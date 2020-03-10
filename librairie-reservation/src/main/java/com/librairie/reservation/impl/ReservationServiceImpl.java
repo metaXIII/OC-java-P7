@@ -8,6 +8,8 @@ import com.librairie.reservation.model.Reservation;
 import com.librairie.reservation.proxies.GatewayProxy;
 import com.librairie.reservation.repositories.ReservationRepository;
 import com.librairie.reservation.service.IReservationService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +25,8 @@ import java.util.Optional;
 @Service
 @Transactional
 public class ReservationServiceImpl implements IReservationService {
+    private static final Logger logger = LogManager.getLogger(ReservationServiceImpl.class);
+
     @Autowired
     private GatewayProxy gatewayProxy;
 
@@ -42,10 +46,13 @@ public class ReservationServiceImpl implements IReservationService {
                 }
                 makeReservation(reservation, stringBuilder, user);
             } catch (Exception e) {
+                logger.error(e.getMessage());
                 return new ResponseEntity<>(HttpStatus.CONFLICT);
             }
             return new ResponseEntity<>(HttpStatus.CREATED);
         }
+        if (logger.isErrorEnabled())
+            logger.error(String.format("user is not present%s", user));
         return new ResponseEntity<>(HttpStatus.CONFLICT);
     }
 

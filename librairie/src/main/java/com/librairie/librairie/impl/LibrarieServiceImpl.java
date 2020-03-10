@@ -4,6 +4,8 @@ import com.librairie.librairie.dto.CollectionDto;
 import com.librairie.librairie.model.Livre;
 import com.librairie.librairie.repositories.LibrairieRepository;
 import com.librairie.librairie.service.ILibrairieService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +18,8 @@ import java.util.Optional;
 @Service
 @Transactional
 public class LibrarieServiceImpl implements ILibrairieService {
+    private static final Logger logger = LogManager.getLogger(LibrarieServiceImpl.class);
+
     @Autowired
     private LibrairieRepository librairieRepository;
 
@@ -44,6 +48,8 @@ public class LibrarieServiceImpl implements ILibrairieService {
             librairieRepository.save(livre.get());
             return new ResponseEntity<>(true, HttpStatus.ACCEPTED);
         }
+        if (logger.isErrorEnabled())
+            logger.error(String.format("Le livre n'a pas été trouvé avec l'id %s", id));
         return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
     }
 }
