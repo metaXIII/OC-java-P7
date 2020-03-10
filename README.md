@@ -3,7 +3,7 @@ Développez le nouveau système d’information de la bibliothèque d’une gran
 
 ### Prérequis
 #### Java
-Installer java (version 11 du jdk disponible [ici](https://www.oracle.com/technetwork/java/javase/downloads/jdk11-downloads-5066655.html).
+Installer java (version 11) du jdk disponible [ici](https://www.oracle.com/technetwork/java/javase/downloads/jdk11-downloads-5066655.html).
  
  #### Maven
  La version utilisé lors du développement du projet est la version 3.6.1. Maven est directement téléchargeable sur le
@@ -76,6 +76,9 @@ Batch
    Vous pouvez également lancer Inbucket pour le serveur mail.
    
    Démarrez ensuite les autres modules.
+   
+   NB : Il est nécessaire d'avoir un utilisateur dans la base de données du service user pour envoyer un mail 
+   (il existe déjà des réservations pour l'utilisateur qui portera l'id 1 afin de permettre les vérifications).
    
    Pour le front, installez d'abord les dépendances du projet ``npm install`` dans le répertoire librairie-front
    et lancez le server localhost avec ``npm start``
