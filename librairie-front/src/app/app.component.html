@@ -1,0 +1,20 @@
+<header>
+  <div class="navbar navbar-dark bg-dark flex align-content-between">
+    <a class="navbar-brand" routerLink="index">API WEB Librairie</a>
+    <button class="btn btn-secondary" routerLink="index" (click)="logout()" *ngIf="userService.getUser()">
+      Se déconnecter de mon compte : {{ userService.getUser().username}}
+    </button>
+  </div>
+  <div class="text-right" *ngIf="panier">
+    <button class="btn btn-success mt-2 mr-4">Mon panier</button>
+  </div>
+</header>
+
+<div class="container mt-5 pt-5">
+  <div class="row">
+    <div class="col-12">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>
+

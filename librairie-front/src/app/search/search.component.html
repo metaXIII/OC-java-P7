@@ -1,0 +1,41 @@
+<app-account></app-account>
+<form method="post" [formGroup]="searchForm" (ngSubmit)="Submit()">
+  <div class="form-group">
+    <label for="nom">Nom :</label>
+    <input type="text" class="form-control" id="nom" placeholder="Nom du livre" name="nom" formControlName="nom">
+  </div>
+  <div class="form-group">
+    <label for="auteur">Auteur :</label>
+    <input type="text" class="form-control" id="auteur" placeholder="Auteur" name="auteur" formControlName="auteur">
+  </div>
+  <div class="form-group">
+    <label for="categorie">Catégorie :</label>
+    <select name="categorie" id="categorie" class="form-control" formControlName="categorie">
+      <option></option>
+      <option value="adolescent">Adolescent</option>
+      <option value="jeunesse">Jeunesse</option>
+      <option value="horreur">Horreur</option>
+      <option value="manga">Manga</option>
+      <option value="erotique">Erotique</option>
+    </select>
+  </div>
+  <button type="submit" class="btn btn-primary">Rechercher</button>
+</form>
+<div class="container" *ngIf="collection">
+  <hr class="hr">
+  <div class="row">
+    <div class="card col-lg-3 col-md-5 offset-lg-1 offset-md-1 col-10 offset-1 mb-2" *ngFor="let livre of collection">
+      <div class="card-body">
+        <h5 class="card-title"><a href="/detail/{{livre.id}}">{{livre.nom}}</a></h5>
+        <h6 class="card-subtitle mb-2 text-muted">{{livre.auteur}}</h6>
+        <p class="small font-italic text-right red">{{livre.categorie}}</p>
+        <p class=", QUANTITE">{{livre.resume}}</p>
+        <p class="card-text">{{livre.maisonEdition.nom}}</p>
+        <p class="card-text">{{livre.quantite}} exemplaires restants</p>
+        <div class="mb-0 text-right">
+          <button class="btn btn-primary" *ngIf="livre.quantite > 0" (click)="addToPanier(livre)">Ajouter au panier</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

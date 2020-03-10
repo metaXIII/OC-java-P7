@@ -2,3 +2,7 @@
 .idea/
 
 librairie.iml
+
+librairie-batch/src/main/java/com/librairie/batch/constants/MyConstants.java
+
+./logs/
