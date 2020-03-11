@@ -5,6 +5,9 @@ import com.librairie.batch.model.Livre;
 import com.librairie.batch.model.Reservation;
 import com.librairie.batch.model.User;
 import lombok.extern.slf4j.Slf4j;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -17,6 +20,8 @@ import java.util.Optional;
 @Service
 @Slf4j
 public class EmailService {
+    private static final Logger logger = LogManager.getLogger(EmailService.class);
+    
 
     private final JavaMailSender mailSender;
 
@@ -42,6 +47,7 @@ public class EmailService {
                     log.error(e.getMessage());
                 }
             });
+            logger.error("erreur lors de la récupération de l'utilisateur");
         });
     }
 
